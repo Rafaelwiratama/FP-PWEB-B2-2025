@@ -142,20 +142,30 @@ body {
 }
 
 .slasher-card h3,
-.slasher-card p {
+.slasher-card h4,
+.slasher-card p,
+.slasher-card span {
   color: #ffffff !important;
 }
+
 
 .slasher-card-highlight h3,
 .slasher-card-highlight h4,
 .slasher-card-highlight p,
-.slasher-card-highlight ul li {
+.slasher-card-highlight ul li,
+.slasher-card-highlight span {
   color: #ffffff !important;
 }
 
 #about h2,
 #about h3,
 #about h4,
-#about p {
+#about p,
+#about ul li {
+  color: #ffffff !important;
+}
+
+.badge,
+.promo-label {
   color: #ffffff !important;
 }
