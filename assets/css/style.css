@@ -141,26 +141,28 @@ body {
   }
 }
 
-.slasher-section *,
-.slasher-section-alt * {
+h1, h2, h3, h4, h5, h6,
+p, span, strong, label,
+a, li, small, button {
   color: #ffffff !important;
 }
 
+.section-title,
+.slasher-section .section-title,
+.slasher-section-alt .section-title {
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(255,255,255,0.3);
+}
+
+.section-subtitle,
 .slasher-section p,
 .slasher-section-alt p {
   color: #e5e7eb !important;
 }
 
-.slasher-section li,
-.slasher-section-alt li {
-  color: #f1f5f9 !important;
-}
-
-.section-title,
-.hero-title,
-.about-title {
+.slasher-card h3, 
+.slasher-card-highlight h3 {
   color: #ffffff !important;
-  text-shadow: 0 0 12px rgba(255, 120, 120, 0.35);
 }
 
 .badge {
