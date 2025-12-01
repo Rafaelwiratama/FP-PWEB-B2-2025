@@ -141,23 +141,21 @@ body {
   }
 }
 
-
+.slasher-card h3,
 .slasher-card p {
-  color: rgba(255, 255, 255, 0.85);
+  color: #ffffff !important;
 }
 
+.slasher-card-highlight h3,
+.slasher-card-highlight h4,
 .slasher-card-highlight p,
 .slasher-card-highlight ul li {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-#about p {
-  color: rgba(255, 255, 255, 0.88);
+  color: #ffffff !important;
 }
 
 #about h2,
 #about h3,
-#about h4 {
-  color: #ffffff;
+#about h4,
+#about p {
+  color: #ffffff !important;
 }
-
