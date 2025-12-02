@@ -11,10 +11,9 @@
 
 <header class="gv-header">
   <div class="container d-flex align-items-center justify-content-between gap-3">
-    <div class="d-flex align-items-center gap-2">
-      <div class="gv-logo-circle">S</div>
-      <span class="gv-logo-text">Slasher<span class="text-accent">.com</span></span>
-    </div>
+    <a href="#hero" class="d-flex align-items-center gv-brand">
+      <img src="assets/image/logo_slasher.png" alt="Slasher.com Logo" class="gv-logo-img">
+    </a>
 
     <div class="gv-search d-none d-md-flex align-items-center gap-2">
       <span class="gv-search-icon">🔍</span>
@@ -24,7 +23,7 @@
     <nav class="gv-nav d-none d-md-flex align-items-center gap-4">
       <a href="#hero" class="gv-nav-link active">Home</a>
       <a href="#browse" class="gv-nav-link">Browse</a>
-      <a href="#news" class="gv-nav-link">News</a>
+      <a href="#trending" class="gv-nav-link">News</a>
       <a href="#about" class="gv-nav-link">About</a>
     </nav>
 
@@ -43,7 +42,7 @@
     <div class="container gv-hero-content">
       <div class="row gy-4 align-items-center">
         <div class="col-lg-5 col-md-6">
-          <p class="gv-hero-kicker mb-2">Featured Today</p>
+          <p class="gv-hero-kicker mb-2">FEATURED TODAY</p>
           <h1 class="gv-hero-title mb-3">
             THE LAST<br>OF US<br>PART II
           </h1>
@@ -52,7 +51,7 @@
             a post-apocalyptic America on a mission of vengeance.
           </p>
           <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
-            <span class="gv-price-tag">$49.99</span>
+            <span class="gv-price-tag">Rp 749.000</span>
             <button class="btn gv-btn-primary btn-lg px-4">Buy Now</button>
             <button class="btn gv-btn-ghost btn-lg px-4">Add to Wishlist</button>
           </div>
@@ -76,49 +75,41 @@
       </div>
 
       <div class="row g-4 gv-category-grid">
-        <!-- Action -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-action">
             <span class="gv-category-label">Action</span>
           </div>
         </div>
-        <!-- Adventure -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-adventure">
             <span class="gv-category-label">Adventure</span>
           </div>
         </div>
-        <!-- Arcade -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-arcade">
             <span class="gv-category-label">Arcade</span>
           </div>
         </div>
-        <!-- FPS -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-fps">
             <span class="gv-category-label">FPS</span>
           </div>
         </div>
-        <!-- Fighting -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-fighting">
             <span class="gv-category-label">Fighting</span>
           </div>
         </div>
-        <!-- RPG -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-rpg">
             <span class="gv-category-label">RPG</span>
           </div>
         </div>
-        <!-- Single-player -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-single">
             <span class="gv-category-label">Single-Player</span>
           </div>
         </div>
-        <!-- VR -->
         <div class="col-md-6">
           <div class="gv-category-card gv-cat-vr">
             <span class="gv-category-label">VR</span>
@@ -128,7 +119,7 @@
     </div>
   </section>
 
-  <!-- GENERIC GAME LIST SECTION COMPONENT -->
+  <!-- BEST DEALS -->
   <section class="gv-section" id="best-deals">
     <div class="container">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -136,54 +127,53 @@
         <span class="gv-section-more">See all ›</span>
       </div>
       <div class="row g-4 gv-game-row">
-        <!-- Card 1 -->
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/deal-it-takes-two.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/it-takes-two.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">It Takes Two</h3>
               <div class="gv-game-price-line">
                 <span class="gv-discount-badge">-70%</span>
-                <span class="gv-price-old">$39.99</span>
-                <span class="gv-price-current">$11.99</span>
+                <span class="gv-price-old">Rp 550.000</span>
+                <span class="gv-price-current">Rp 165.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
 
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/deal-forza.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/forza horizon 5.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
-              <h3 class="gv-game-title">Forza Horizon 5 – Premium</h3>
+              <h3 class="gv-game-title">Forza Horizon 5 – Premium Edition</h3>
               <div class="gv-game-price-line">
                 <span class="gv-discount-badge">-80%</span>
-                <span class="gv-price-old">$51.41</span>
-                <span class="gv-price-current">$10.30</span>
+                <span class="gv-price-old">Rp 820.000</span>
+                <span class="gv-price-current">Rp 164.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
 
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/deal-a-way-out.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/a way out.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">A Way Out</h3>
               <div class="gv-game-price-line">
                 <span class="gv-discount-badge">-50%</span>
-                <span class="gv-price-old">$29.99</span>
-                <span class="gv-price-current">$14.99</span>
+                <span class="gv-price-old">Rp 450.000</span>
+                <span class="gv-price-current">Rp 225.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
@@ -199,48 +189,47 @@
         <span class="gv-section-more">See all ›</span>
       </div>
       <div class="row g-4 gv-game-row">
-        <!-- contoh 3 card -->
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/trend-ready-or-not.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/ready or not.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">Ready or Not</h3>
               <div class="gv-game-price-line">
-                <span class="gv-price-current">$28.99</span>
+                <span class="gv-price-current">Rp 289.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/trend-cyberpunk.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/cyberpunk 2077.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">Cyberpunk 2077</h3>
               <div class="gv-game-price-line">
                 <span class="gv-discount-badge">-65%</span>
-                <span class="gv-price-old">$44.99</span>
-                <span class="gv-price-current">$29.24</span>
+                <span class="gv-price-old">Rp 700.000</span>
+                <span class="gv-price-current">Rp 245.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/trend-repo.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/Repo.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">R.E.P.O.</h3>
               <div class="gv-game-price-line">
-                <span class="gv-price-current">$5.79</span>
+                <span class="gv-price-current">Rp 89.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
@@ -248,7 +237,7 @@
     </div>
   </section>
 
-  <!-- UPCOMING -->
+  <!-- UPCOMING GAMES (UPDATED) -->
   <section class="gv-section" id="upcoming">
     <div class="container">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -258,13 +247,13 @@
       <div class="row g-4 gv-game-row">
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/up-mafia.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/eldenring_nightreign_dlc.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
-              <h3 class="gv-game-title">Mafia: The Old Country</h3>
+              <h3 class="gv-game-title">Elden Ring: Forsaken Hollows</h3>
               <div class="gv-game-price-line">
-                <span class="gv-price-current">$49.99</span>
+                <span class="gv-price-current">Rp 549.000</span>
               </div>
               <button class="btn gv-btn-light w-100 mt-2">Pre-Order</button>
             </div>
@@ -272,13 +261,13 @@
         </div>
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/up-fc26.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/unbeatable.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
-              <h3 class="gv-game-title">EA SPORTS FC™ 26</h3>
+              <h3 class="gv-game-title">Unbeatable</h3>
               <div class="gv-game-price-line">
-                <span class="gv-price-current">$69.99</span>
+                <span class="gv-price-current">Rp 299.000</span>
               </div>
               <button class="btn gv-btn-light w-100 mt-2">Pre-Order</button>
             </div>
@@ -286,13 +275,13 @@
         </div>
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/up-hell-is-us.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/CodeVeinII.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
-              <h3 class="gv-game-title">Hell is Us</h3>
+              <h3 class="gv-game-title">Code Vein 2</h3>
               <div class="gv-game-price-line">
-                <span class="gv-price-current">$29.99</span>
+                <span class="gv-price-current">Rp 599.000</span>
               </div>
               <button class="btn gv-btn-light w-100 mt-2">Pre-Order</button>
             </div>
@@ -312,49 +301,49 @@
       <div class="row g-4 gv-game-row">
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/bs-rdr2.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/red dead redemption 2.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">Red Dead Redemption II</h3>
               <div class="gv-game-price-line">
                 <span class="gv-discount-badge">-20%</span>
-                <span class="gv-price-old">$59.99</span>
-                <span class="gv-price-current">$47.99</span>
+                <span class="gv-price-old">Rp 799.000</span>
+                <span class="gv-price-current">Rp 639.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/bs-gta5.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/gta 5.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">Grand Theft Auto V</h3>
               <div class="gv-game-price-line">
                 <span class="gv-discount-badge">-55%</span>
-                <span class="gv-price-old">$29.99</span>
-                <span class="gv-price-current">$13.49</span>
+                <span class="gv-price-old">Rp 499.000</span>
+                <span class="gv-price-current">Rp 225.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
         <div class="col-md-4">
           <article class="gv-game-card">
-            <div class="gv-game-cover" style="background-image:url('assets/img/bs-ghost.jpg');">
+            <div class="gv-game-cover" style="background-image:url('assets/image/Ghost-of-Tsushima.jpg');">
               <button class="gv-fav-btn">♡</button>
             </div>
             <div class="gv-game-body">
               <h3 class="gv-game-title">Ghost of Tsushima</h3>
               <div class="gv-game-price-line">
                 <span class="gv-discount-badge">-50%</span>
-                <span class="gv-price-old">$69.99</span>
-                <span class="gv-price-current">$34.99</span>
+                <span class="gv-price-old">Rp 799.000</span>
+                <span class="gv-price-current">Rp 399.000</span>
               </div>
-              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+              <button class="btn gv-btn-light w-100 mt-2">Tambah ke Keranjang</button>
             </div>
           </article>
         </div>
@@ -369,8 +358,7 @@
     <div class="row g-4">
       <div class="col-md-5">
         <div class="d-flex align-items-center gap-2 mb-3">
-          <div class="gv-logo-circle">S</div>
-          <span class="gv-logo-text">Slasher<span class="text-accent">.com</span></span>
+          <img src="assets/image/logo_slasher.png" alt="Slasher.com Logo" class="gv-logo-img">
         </div>
         <p class="gv-footer-text">
           Slasher.com — tempat setiap gamer naik level. Dari game AAA epik sampai indie gem,
