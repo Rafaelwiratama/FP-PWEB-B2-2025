@@ -2,230 +2,408 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Slasher.com · Game Store</title>
+  <title>Slasher.com · Gaming E-Commerce</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark slasher-nav fixed-top">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="#hero">
-      <span class="slasher-logo me-2">S</span>
-      <span class="fw-bold">SLASHER.com</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
-        <li class="nav-item"><a class="nav-link active" href="#hero">Beranda</a></li>
-        <li class="nav-item"><a class="nav-link" href="#categories">Kategori</a></li>
-        <li class="nav-item"><a class="nav-link" href="#promo">Promo</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
-        <li class="nav-item d-flex gap-2 mt-3 mt-lg-0">
-          <a href="#" class="btn btn-outline-light btn-sm px-3">Login</a>
-          <a href="#" class="btn btn-slasher btn-sm px-3">Daftar</a>
-        </li>
-      </ul>
+<header class="gv-header">
+  <div class="container d-flex align-items-center justify-content-between gap-3">
+    <div class="d-flex align-items-center gap-2">
+      <div class="gv-logo-circle">S</div>
+      <span class="gv-logo-text">Slasher<span class="text-accent">.com</span></span>
+    </div>
+
+    <div class="gv-search d-none d-md-flex align-items-center gap-2">
+      <span class="gv-search-icon">🔍</span>
+      <input type="text" class="gv-search-input" placeholder="Search store">
+    </div>
+
+    <nav class="gv-nav d-none d-md-flex align-items-center gap-4">
+      <a href="#hero" class="gv-nav-link active">Home</a>
+      <a href="#browse" class="gv-nav-link">Browse</a>
+      <a href="#news" class="gv-nav-link">News</a>
+      <a href="#about" class="gv-nav-link">About</a>
+    </nav>
+
+    <div class="gv-auth d-none d-md-flex gap-2">
+      <button class="btn btn-outline-light btn-sm px-3 gv-btn-ghost">Log in</button>
+      <button class="btn btn-primary btn-sm px-3 gv-btn-primary">Register</button>
     </div>
   </div>
-</nav>
+</header>
 
 <main>
-  <section id="hero" class="hero-section">
-    <div class="container">
-      <div class="row align-items-center gy-4">
-        <div class="col-lg-6">
-          <h1 class="hero-title mb-3">Tempat Belanja Game Para Slayer</h1>
-          <p class="hero-subtitle mb-4">
-            Slasher.com adalah toko game online tempat kamu bisa menemukan game original
-            untuk PC, PlayStation, Xbox, dan Nintendo Switch dengan proses pembelian yang simpel.
+
+  <!-- HERO -->
+  <section id="hero" class="gv-hero">
+    <div class="gv-hero-overlay"></div>
+    <div class="container gv-hero-content">
+      <div class="row gy-4 align-items-center">
+        <div class="col-lg-5 col-md-6">
+          <p class="gv-hero-kicker mb-2">Featured Today</p>
+          <h1 class="gv-hero-title mb-3">
+            THE LAST<br>OF US<br>PART II
+          </h1>
+          <p class="gv-hero-desc mb-4">
+            Five years after the events of the first game, Ellie embarks on another journey through
+            a post-apocalyptic America on a mission of vengeance.
           </p>
-          <div class="d-flex flex-wrap gap-3">
-            <a href="#categories" class="btn btn-slasher btn-lg px-4">Jelajahi Katalog</a>
-            <a href="#promo" class="btn btn-outline-light btn-lg px-4">Lihat Promo</a>
+          <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+            <span class="gv-price-tag">$49.99</span>
+            <button class="btn gv-btn-primary btn-lg px-4">Buy Now</button>
+            <button class="btn gv-btn-ghost btn-lg px-4">Add to Wishlist</button>
           </div>
         </div>
-        <div class="col-lg-6">
-          <div class="hero-card">
-            <div class="hero-tag mb-2">Featured Game</div>
-            <h2 class="hero-game-title mb-2">Elden Ring: Shadow of the Erdtree</h2>
-            <p class="hero-game-text mb-3">
-              Masuki dunia fantasi brutal dengan open-world raksasa, boss epic, dan build karakter tanpa batas.
-            </p>
-            <div class="row g-3">
-              <div class="col-4">
-                <div class="hero-stat">
-                  <span class="hero-stat-label">Rating</span>
-                  <span class="hero-stat-value">9.5/10</span>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="hero-stat">
-                  <span class="hero-stat-label">Platform</span>
-                  <span class="hero-stat-value">PC · PS5 · XSX</span>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="hero-stat">
-                  <span class="hero-stat-label">Harga</span>
-                  <span class="hero-stat-value">Rp 699.000</span>
-                </div>
-              </div>
+        <div class="col-lg-7 col-md-6 d-none d-md-block">
+          <div class="gv-hero-right">
+            <button class="gv-hero-arrow gv-hero-arrow-left">‹</button>
+            <button class="gv-hero-arrow gv-hero-arrow-right">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section id="browse" class="gv-section gv-section-dark">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h2 class="gv-section-title">Categories</h2>
+        <span class="gv-section-more">View all ›</span>
+      </div>
+
+      <div class="row g-4 gv-category-grid">
+        <!-- Action -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-action">
+            <span class="gv-category-label">Action</span>
+          </div>
+        </div>
+        <!-- Adventure -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-adventure">
+            <span class="gv-category-label">Adventure</span>
+          </div>
+        </div>
+        <!-- Arcade -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-arcade">
+            <span class="gv-category-label">Arcade</span>
+          </div>
+        </div>
+        <!-- FPS -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-fps">
+            <span class="gv-category-label">FPS</span>
+          </div>
+        </div>
+        <!-- Fighting -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-fighting">
+            <span class="gv-category-label">Fighting</span>
+          </div>
+        </div>
+        <!-- RPG -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-rpg">
+            <span class="gv-category-label">RPG</span>
+          </div>
+        </div>
+        <!-- Single-player -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-single">
+            <span class="gv-category-label">Single-Player</span>
+          </div>
+        </div>
+        <!-- VR -->
+        <div class="col-md-6">
+          <div class="gv-category-card gv-cat-vr">
+            <span class="gv-category-label">VR</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GENERIC GAME LIST SECTION COMPONENT -->
+  <section class="gv-section" id="best-deals">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h2 class="gv-section-title">Best Deals</h2>
+        <span class="gv-section-more">See all ›</span>
+      </div>
+      <div class="row g-4 gv-game-row">
+        <!-- Card 1 -->
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/deal-it-takes-two.jpg');">
+              <button class="gv-fav-btn">♡</button>
             </div>
-            <div class="mt-4 d-flex flex-wrap gap-2">
-              <span class="hero-chip">Action RPG</span>
-              <span class="hero-chip">Open World</span>
-              <span class="hero-chip">Singleplayer</span>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">It Takes Two</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-discount-badge">-70%</span>
+                <span class="gv-price-old">$39.99</span>
+                <span class="gv-price-current">$11.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
             </div>
-          </div>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/deal-forza.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Forza Horizon 5 – Premium</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-discount-badge">-80%</span>
+                <span class="gv-price-old">$51.41</span>
+                <span class="gv-price-current">$10.30</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/deal-a-way-out.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">A Way Out</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-discount-badge">-50%</span>
+                <span class="gv-price-old">$29.99</span>
+                <span class="gv-price-current">$14.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="categories" class="section section-dark">
+  <!-- TRENDING -->
+  <section class="gv-section gv-section-dark" id="trending">
     <div class="container">
-      <div class="section-header text-center mb-4">
-        <h2 class="section-title">Kategori Game Populer</h2>
-        <p class="section-subtitle">Pilih gaya bermainmu dan temukan game favoritmu.</p>
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h2 class="gv-section-title">Trending</h2>
+        <span class="gv-section-more">See all ›</span>
       </div>
-      <div class="d-flex justify-content-center mb-4">
-        <div class="search-wrapper">
-          <input type="text" class="form-control search-input" placeholder="Cari judul game (dummy, frontend dulu)">
+      <div class="row g-4 gv-game-row">
+        <!-- contoh 3 card -->
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/trend-ready-or-not.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Ready or Not</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-price-current">$28.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
         </div>
-      </div>
-      <div class="row g-4">
-        <div class="col-md-3 col-6">
-          <div class="info-card text-center">
-            <div class="info-icon mb-2">🎮</div>
-            <h3 class="info-title mb-1">Action</h3>
-            <p class="info-text mb-3">Game penuh adrenalin dan pertempuran intens.</p>
-            <span class="info-tag">120+ Game</span>
-          </div>
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/trend-cyberpunk.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Cyberpunk 2077</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-discount-badge">-65%</span>
+                <span class="gv-price-old">$44.99</span>
+                <span class="gv-price-current">$29.24</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
         </div>
-        <div class="col-md-3 col-6">
-          <div class="info-card text-center">
-            <div class="info-icon mb-2">🧙‍♂️</div>
-            <h3 class="info-title mb-1">RPG</h3>
-            <p class="info-text mb-3">Jelajahi dunia fantasi dan build karaktermu.</p>
-            <span class="info-tag">80+ Game</span>
-          </div>
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="info-card text-center">
-            <div class="info-icon mb-2">🏎️</div>
-            <h3 class="info-title mb-1">Sport & Racing</h3>
-            <p class="info-text mb-3">Balapan brutal dan pertandingan epic.</p>
-            <span class="info-tag">40+ Game</span>
-          </div>
-        </div>
-        <div class="col-md-3 col-6">
-          <div class="info-card text-center">
-            <div class="info-icon mb-2">✨</div>
-            <h3 class="info-title mb-1">Indie & Casual</h3>
-            <p class="info-text mb-3">Game santai dengan konsep unik.</p>
-            <span class="info-tag">60+ Game</span>
-          </div>
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/trend-repo.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">R.E.P.O.</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-price-current">$5.79</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="promo" class="section section-gradient">
+  <!-- UPCOMING -->
+  <section class="gv-section" id="upcoming">
     <div class="container">
-      <div class="section-header text-center mb-4">
-        <h2 class="section-title">Promo & Highlight</h2>
-        <p class="section-subtitle">Penawaran spesial untuk gamer yang suka diskon.</p>
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h2 class="gv-section-title">Upcoming Games</h2>
+        <span class="gv-section-more">See all ›</span>
       </div>
-      <div class="row g-4">
+      <div class="row g-4 gv-game-row">
         <div class="col-md-4">
-          <div class="promo-card h-100">
-            <div class="promo-badge">Diskon Minggu Ini</div>
-            <h3 class="promo-title mb-2">Weekend Slash Sale</h3>
-            <p class="promo-text mb-3">
-              Diskon hingga 70% untuk game pilihan setiap akhir pekan. Cocok untuk backlog hunter.
-            </p>
-            <ul class="promo-list mb-3">
-              <li>Game AAA pilihan</li>
-              <li>Paket bundling hemat</li>
-              <li>Waktu terbatas</li>
-            </ul>
-            <a href="#" class="btn btn-outline-light btn-sm px-3">Lihat Detail</a>
-          </div>
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/up-mafia.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Mafia: The Old Country</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-price-current">$49.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Pre-Order</button>
+            </div>
+          </article>
         </div>
         <div class="col-md-4">
-          <div class="promo-card h-100">
-            <div class="promo-badge">Member Only</div>
-            <h3 class="promo-title mb-2">Slasher+ Membership</h3>
-            <p class="promo-text mb-3">
-              Akses early-bird untuk pre-order, bonus point tiap transaksi, dan harga khusus member.
-            </p>
-            <ul class="promo-list mb-3">
-              <li>Point reward setiap pembelian</li>
-              <li>Diskon khusus member</li>
-              <li>Akses pre-order eksklusif</li>
-            </ul>
-            <a href="#" class="btn btn-outline-light btn-sm px-3">Daftar Slasher+</a>
-          </div>
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/up-fc26.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">EA SPORTS FC™ 26</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-price-current">$69.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Pre-Order</button>
+            </div>
+          </article>
         </div>
         <div class="col-md-4">
-          <div class="promo-card h-100">
-            <div class="promo-badge">Coming Soon</div>
-            <h3 class="promo-title mb-2">Game Rilis Terbaru</h3>
-            <p class="promo-text mb-3">
-              Pantau game yang akan datang dan siapkan pre-order agar tidak ketinggalan day-one experience.
-            </p>
-            <ul class="promo-list mb-3">
-              <li>Teaser dan trailer</li>
-              <li>Informasi tanggal rilis</li>
-              <li>Opsi pre-order</li>
-            </ul>
-            <a href="#" class="btn btn-outline-light btn-sm px-3">Lihat Rilisan Baru</a>
-          </div>
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/up-hell-is-us.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Hell is Us</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-price-current">$29.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Pre-Order</button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="about" class="section section-dark">
+  <!-- BESTSELLERS -->
+  <section class="gv-section gv-section-dark" id="bestsellers">
     <div class="container">
-      <div class="row g-4 align-items-center">
-        <div class="col-lg-6">
-          <h2 class="section-title mb-3">Tentang Slasher.com</h2>
-          <p class="section-subtitle text-start mb-3">
-            Slasher.com lahir dari komunitas gamer yang ingin pengalaman beli game itu simpel, rapi, dan aman.
-            Fokus kami hanya satu: membantu kamu menemukan game terbaik tanpa drama.
-          </p>
-          <p class="section-subtitle text-start mb-4">
-            Final Project ini mengimplementasikan konsep e-commerce modern dengan modul katalog, keranjang,
-            checkout, dan dashboard admin menggunakan PHP native dan MySQL.
-          </p>
-          <a href="#categories" class="btn btn-slasher px-4">Mulai Lihat Game</a>
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h2 class="gv-section-title">Bestsellers</h2>
+        <span class="gv-section-more">See all ›</span>
+      </div>
+      <div class="row g-4 gv-game-row">
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/bs-rdr2.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Red Dead Redemption II</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-discount-badge">-20%</span>
+                <span class="gv-price-old">$59.99</span>
+                <span class="gv-price-current">$47.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
         </div>
-        <div class="col-lg-6">
-          <div class="feature-card">
-            <h3 class="feature-title mb-3">Ringkasan Fitur Utama</h3>
-            <ul class="feature-list mb-0">
-              <li>Katalog game berdasarkan platform dan kategori.</li>
-              <li>Sistem keranjang belanja dan checkout.</li>
-              <li>Manajemen user dengan role customer dan admin.</li>
-              <li>Dashboard admin untuk kelola game dan pesanan.</li>
-              <li>Integrasi Google Maps untuk lokasi toko Slasher HQ.</li>
-            </ul>
-          </div>
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/bs-gta5.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Grand Theft Auto V</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-discount-badge">-55%</span>
+                <span class="gv-price-old">$29.99</span>
+                <span class="gv-price-current">$13.49</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
+        </div>
+        <div class="col-md-4">
+          <article class="gv-game-card">
+            <div class="gv-game-cover" style="background-image:url('assets/img/bs-ghost.jpg');">
+              <button class="gv-fav-btn">♡</button>
+            </div>
+            <div class="gv-game-body">
+              <h3 class="gv-game-title">Ghost of Tsushima</h3>
+              <div class="gv-game-price-line">
+                <span class="gv-discount-badge">-50%</span>
+                <span class="gv-price-old">$69.99</span>
+                <span class="gv-price-current">$34.99</span>
+              </div>
+              <button class="btn gv-btn-light w-100 mt-2">Add to Cart</button>
+            </div>
+          </article>
         </div>
       </div>
     </div>
   </section>
+
 </main>
 
-<footer class="slasher-footer">
-  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-    <span class="small">© 2025 Slasher.com</span>
-    <span class="small">Final Project Pemrograman Web</span>
+<footer class="gv-footer" id="about">
+  <div class="container gv-footer-top">
+    <div class="row g-4">
+      <div class="col-md-5">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div class="gv-logo-circle">S</div>
+          <span class="gv-logo-text">Slasher<span class="text-accent">.com</span></span>
+        </div>
+        <p class="gv-footer-text">
+          Slasher.com — tempat setiap gamer naik level. Dari game AAA epik sampai indie gem,
+          temukan penawaran terbaik untuk PC, Xbox, PlayStation, dan Nintendo.
+        </p>
+      </div>
+      <div class="col-md-3">
+        <h5 class="gv-footer-title">My Account</h5>
+        <ul class="gv-footer-links">
+          <li><a href="#">My Account</a></li>
+          <li><a href="#">My Orders</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5 class="gv-footer-title">Support</h5>
+        <ul class="gv-footer-links">
+          <li><a href="#">Terms and conditions</a></li>
+          <li><a href="#">Privacy and cookie policy</a></li>
+          <li><a href="#">Refund policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="gv-footer-icons mt-3">
+      <span></span>
+      <span></span>
+      <span>📸</span>
+      <span>🎮</span>
+    </div>
+  </div>
+  <div class="gv-footer-bottom">
+    <div class="container text-center small">
+      Copyright Slasher.com 2025, all rights reserved
+    </div>
   </div>
 </footer>
 
