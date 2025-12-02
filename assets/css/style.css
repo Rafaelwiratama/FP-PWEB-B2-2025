@@ -33,26 +33,14 @@ body {
   backdrop-filter: blur(18px);
 }
 
-.gv-logo-circle {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  background: radial-gradient(circle at 30% 20%, #ffffff 0, #38bdf8 35%, #1d4ed8 80%);
-  color: #020617;
-  box-shadow: 0 0 0 2px rgba(191, 219, 254, 0.8), 0 14px 28px rgba(15, 23, 42, 0.9);
+.gv-brand {
+  text-decoration: none;
 }
 
-.gv-logo-text {
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.text-accent {
-  color: #38bdf8;
+.gv-logo-img {
+  height: 42px;
+  width: auto;
+  filter: drop-shadow(0 0 8px rgba(0, 225, 255, 0.55));
 }
 
 .gv-search {
@@ -117,7 +105,7 @@ body {
   min-height: 100vh;
   padding-top: 120px;
   padding-bottom: 80px;
-  background: url("../img/hero-bg.jpg") center/cover no-repeat;
+  background: url("../image/last of us 2.jpg") center/cover no-repeat;
 }
 
 .gv-hero-overlay {
@@ -235,15 +223,16 @@ body {
   font-weight: 700;
 }
 
-/* ganti URL di bawah dengan gambar kamu sendiri */
-.gv-cat-action { background-image: url("../img/cat-action.jpg"); }
-.gv-cat-adventure { background-image: url("../img/cat-adventure.jpg"); }
-.gv-cat-arcade { background-image: url("../img/cat-arcade.jpg"); }
-.gv-cat-fps { background-image: url("../img/cat-fps.jpg"); }
-.gv-cat-fighting { background-image: url("../img/cat-fighting.jpg"); }
-.gv-cat-rpg { background-image: url("../img/cat-rpg.jpg"); }
-.gv-cat-single { background-image: url("../img/cat-single.jpg"); }
-.gv-cat-vr { background-image: url("../img/cat-vr.jpg"); }
+/* mapping kategori ke gambar yang ada di assets/image */
+
+.gv-cat-action { background-image: url("../image/last of us 2.jpg"); }
+.gv-cat-adventure { background-image: url("../image/Ghost-of-Tsushima.jpg"); }
+.gv-cat-arcade { background-image: url("../image/Repo.jpg"); }
+.gv-cat-fps { background-image: url("../image/ready or not.jpg"); }
+.gv-cat-fighting { background-image: url("../image/gta 5.jpg"); }
+.gv-cat-rpg { background-image: url("../image/cyberpunk 2077.jpg"); }
+.gv-cat-single { background-image: url("../image/red dead redemption 2.jpg"); }
+.gv-cat-vr { background-image: url("../image/a way out.jpg"); }
 
 /* GAME CARDS */
 
