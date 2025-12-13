@@ -1,0 +1,65 @@
+<?php
+session_start();
+require_once __DIR__ . '/_guard.php';
+require_once __DIR__ . '/../config/config.php';
+
+$orderItemId = (int)($_POST['order_item_id'] ?? 0);
+if (!$orderItemId) die('Invalid item');
+
+$stmt = $pdo->prepare("
+    SELECT 
+        oi.*,
+        o.payment_status,
+        pf.slug,
+        p.is_upcoming,
+        p.price
+    FROM order_items oi
+    JOIN orders o ON o.id = oi.order_id
+    JOIN platforms pf ON pf.id = oi.platform_id
+    JOIN products p ON p.id = oi.product_id
+    WHERE oi.id = ?
+");
+$stmt->execute([$orderItemId]);
+$item = $stmt->fetch();
+
+if (!$item) die('Item not found');
+
+/* CEK PAYMENT */
+if ($item['payment_status'] !== 'settlement') {
+    die('Order belum dibayar');
+}
+
+/* CEK UPCOMING / PRICE */
+if ((int)$item['is_upcoming'] === 1 || (int)$item['price'] <= 0) {
+    $_SESSION['flash_error'] = 'Produk ini masih UPCOMING, belum bisa generate redeem code';
+    header('Location: order_detail.php?id=' . $item['order_id']);
+    exit;
+}
+
+/* CEK REDEEM CODE EXIST */
+$check = $pdo->prepare("
+    SELECT id FROM redeem_codes WHERE order_item_id = ?
+");
+$check->execute([$orderItemId]);
+if ($check->fetch()) {
+    $_SESSION['flash_error'] = 'Redeem code sudah ada';
+    header('Location: order_detail.php?id=' . $item['order_id']);
+    exit;
+}
+
+/* GENERATE */
+$code = generate_redeem_code($item['slug']);
+
+$insert = $pdo->prepare("
+    INSERT INTO redeem_codes (order_item_id, platform_id, code)
+    VALUES (?, ?, ?)
+");
+$insert->execute([
+    $orderItemId,
+    $item['platform_id'],
+    $code
+]);
+
+$_SESSION['flash_success'] = 'Redeem code berhasil dibuat';
+header('Location: order_detail.php?id=' . $item['order_id']);
+exit;
