@@ -44,25 +44,52 @@ include __DIR__ . '/includes/header.php';
     <div class="row g-4">
       <?php foreach ($products as $p): ?>
         <div class="col-md-4">
-          <article class="gv-game-card h-100">
-            <div class="gv-game-cover"
-                 style="background-image:url('assets/images/<?= htmlspecialchars($p['image']) ?>')"></div>
 
-            <div class="gv-game-body">
-              <h3><?= htmlspecialchars($p['title']) ?></h3>
+          <a href="product.php?slug=<?= urlencode($p['slug']) ?>"
+             class="text-decoration-none text-light">
 
-              <?php if ($p['is_upcoming'] || $p['price'] <= 0): ?>
-                <span class="badge bg-warning text-dark">Coming Soon</span>
-              <?php else: ?>
-                <form method="post" action="cart.php">
-                  <input type="hidden" name="add_product_id" value="<?= $p['id'] ?>">
-                  <button class="btn btn-sm btn-outline-light w-100">
-                    + Tambah ke Keranjang
-                  </button>
-                </form>
-              <?php endif; ?>
-            </div>
-          </article>
+            <article class="gv-game-card h-100">
+
+              <div class="gv-game-cover"
+                   style="background-image:url('assets/images/<?= htmlspecialchars($p['image']) ?>')">
+              </div>
+
+              <div class="gv-game-body">
+                <h3><?= htmlspecialchars($p['title']) ?></h3>
+
+                <!-- PRICE -->
+                <?php if ($p['discount_percent'] > 0): ?>
+                  <span class="gv-price-current">
+                    <?= rupiah(discounted_price($p)) ?>
+                  </span>
+                <?php else: ?>
+                  <span class="gv-price-current">
+                    <?= rupiah($p['price']) ?>
+                  </span>
+                <?php endif; ?>
+
+                <!-- ACTION -->
+                <?php if ($p['is_upcoming'] || $p['price'] <= 0): ?>
+                  <span class="badge bg-warning text-dark mt-2">
+                    Coming Soon
+                  </span>
+                <?php else: ?>
+                  <form method="post" action="cart.php"
+                        onClick="event.stopPropagation();"
+                        class="mt-2">
+                    <input type="hidden" name="add_product_id" value="<?= $p['id'] ?>">
+                    <button type="submit"
+                            class="btn btn-sm btn-outline-light w-100">
+                      + Tambah ke Keranjang
+                    </button>
+                  </form>
+                <?php endif; ?>
+
+              </div>
+            </article>
+
+          </a>
+
         </div>
       <?php endforeach; ?>
     </div>
