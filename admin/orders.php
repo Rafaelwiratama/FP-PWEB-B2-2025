@@ -55,8 +55,12 @@ $orders = $stmt->fetchAll();
                                 <div class="small text-muted"><?= htmlspecialchars($ord['customer_email'] ?? '-'); ?></div>
                             </td>
                             <td><?= (int)$ord['items_count']; ?></td>
-                            <td class="text-end"><?= rupiah((int)$ord['total_price']); ?></td>
-                            <td>
+                           <td class="text-end">
+    <a href="order_detail.php?id=<?= $ord['id']; ?>"
+       class="btn btn-sm btn-outline-primary">
+        Detail / Generate Code
+    </a>
+</td>
                                 <?php
                                 $ps = $ord['payment_status'] ?? 'pending';
                                 $cls = 'secondary';
@@ -78,3 +82,4 @@ $orders = $stmt->fetchAll();
 </main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
+
