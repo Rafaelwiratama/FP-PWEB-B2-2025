@@ -2,10 +2,6 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/_guard.php';
 
-if ($_SESSION['role'] !== 'admin') {
-    die('Akses ditolak');
-}
-
 $orderId = (int)($_GET['id'] ?? 0);
 if (!$orderId) {
     die('Order tidak valid');
@@ -33,22 +29,25 @@ $stmt->execute([$orderId]);
 $items = $stmt->fetchAll();
 
 /* =====================
-   GENERATE CODE
+   GENERATE CODE FUNCTION
 ===================== */
 function generate_redeem_code(string $platformSlug): string {
     $prefix = strtoupper(substr($platformSlug ?: 'GAME', 0, 4));
     $chars  = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    $code   = '';
+    $raw = '';
     for ($i = 0; $i < 16; $i++) {
-        $code .= $chars[random_int(0, strlen($chars) - 1)];
+        $raw .= $chars[random_int(0, strlen($chars) - 1)];
     }
     return $prefix . '-' .
-           substr($code,0,4) . '-' .
-           substr($code,4,4) . '-' .
-           substr($code,8,4) . '-' .
-           substr($code,12,4);
+           substr($raw,0,4) . '-' .
+           substr($raw,4,4) . '-' .
+           substr($raw,8,4) . '-' .
+           substr($raw,12,4);
 }
 
+/* =====================
+   HANDLE GENERATE
+===================== */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
     $insert = $pdo->prepare("
         INSERT INTO redeem_codes (order_item_id, platform_id, code)
@@ -72,42 +71,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
     exit;
 }
 
-include __DIR__ . '/includes/header.php';
+include __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="container py-5">
-  <h2>Admin · Order #<?= $orderId ?></h2>
+<main class="container py-5">
+    <h2 class="mb-4">Admin · Order #<?= $orderId ?></h2>
 
-  <form method="post" class="mb-3">
-    <button name="generate" class="btn btn-warning">
-      Generate Redeem Code
-    </button>
-  </form>
+    <form method="post" class="mb-3">
+        <button name="generate" class="btn btn-warning">
+            Generate Redeem Code
+        </button>
+    </form>
 
-  <table class="table table-dark table-striped">
-    <thead>
-      <tr>
-        <th>Produk</th>
-        <th>Platform</th>
-        <th>Redeem Code</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($items as $it): ?>
-      <tr>
-        <td><?= htmlspecialchars($it['title']) ?></td>
-        <td><?= htmlspecialchars($it['platform_name']) ?></td>
-        <td>
-          <?php if ($it['code']): ?>
-            <code><?= htmlspecialchars($it['code']) ?></code>
-          <?php else: ?>
-            <span class="badge bg-warning text-dark">Belum tersedia</span>
-          <?php endif; ?>
-        </td>
-      </tr>
-    <?php endforeach; ?>
-    </tbody>
-  </table>
-</div>
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th>Produk</th>
+            <th>Platform</th>
+            <th>Redeem Code</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($items as $it): ?>
+            <tr>
+                <td><?= htmlspecialchars($it['title']) ?></td>
+                <td><?= htmlspecialchars($it['platform_name']) ?></td>
+                <td>
+                    <?php if ($it['code']): ?>
+                        <code><?= htmlspecialchars($it['code']) ?></code>
+                    <?php else: ?>
+                        <span class="badge bg-warning text-dark">Belum tersedia</span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</main>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
