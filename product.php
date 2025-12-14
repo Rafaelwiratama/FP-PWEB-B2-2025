@@ -189,14 +189,20 @@ include __DIR__ . '/includes/header.php';
       </div>
 
       <!-- BUY -->
-      <form method="post" action="cart.php" class="d-flex align-items-center gap-3 mb-4">
-        <input type="hidden" name="add_product_id" value="<?= $product['id'] ?>">
-        <input type="number" name="qty" value="1" min="1"
-               class="form-control" style="width:90px;">
-        <button class="btn btn-primary btn-lg px-4">
-          Buy Now
-        </button>
-      </form>
+     <?php if (!$product['is_upcoming'] && $product['price'] > 0): ?>
+<form method="post" action="cart.php" class="d-flex align-items-center gap-3 mb-4">
+  <input type="hidden" name="add_product_id" value="<?= $product['id'] ?>">
+  <input type="number" name="qty" value="1" min="1"
+         class="form-control" style="width:90px;">
+  <button class="btn btn-primary btn-lg px-4">
+    Buy Now
+  </button>
+</form>
+<?php else: ?>
+  <span class="badge bg-warning text-dark fs-6">
+    Produk belum tersedia
+  </span>
+<?php endif; ?>
 
       <!-- DESCRIPTION -->
       <div class="text-muted lh-lg">
@@ -242,3 +248,4 @@ include __DIR__ . '/includes/header.php';
 </main>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+
