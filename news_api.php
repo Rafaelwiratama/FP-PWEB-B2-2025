@@ -1,50 +1,51 @@
 <?php
 header('Content-Type: application/json');
 
-$feeds = [
-    'IGN'      => 'https://feeds.ign.com/ign/all',
-    'GameSpot' => 'https://www.gamespot.com/feeds/news/'
-];
+/* ===============================
+   KONFIGURASI NEWSAPI
+================================ */
+$apiKey = '957b7c20fd134c6a96b9a2fcd3c9b566'; 
 
-$news = [];
+$url = "https://newsapi.org/v2/top-headlines?" . http_build_query([
+    'category' => 'gaming',
+    'language' => 'en',
+    'pageSize' => 10,
+    'apiKey'   => $apiKey
+]);
 
+/* ===============================
+   FETCH DATA
+================================ */
 $context = stream_context_create([
-    "ssl" => [
-        "verify_peer"      => false,
-        "verify_peer_name" => false,
-    ],
     "http" => [
         "timeout" => 10
     ]
 ]);
 
-foreach ($feeds as $source => $url) {
-    $content = @file_get_contents($url, false, $context);
-    if (!$content) continue;
+$response = @file_get_contents($url, false, $context);
 
-    $rss = @simplexml_load_string($content);
-    if (!$rss || !isset($rss->channel->item)) continue;
+if (!$response) {
+    echo json_encode([]);
+    exit;
+}
 
-    foreach ($rss->channel->item as $item) {
+$data = json_decode($response, true);
+$news = [];
 
-        $image = 'https://via.placeholder.com/600x400?text=Game+News';
-
-        // ambil enclosure image jika ada
-        if (isset($item->enclosure['url'])) {
-            $image = (string)$item->enclosure['url'];
-        }
+/* ===============================
+   PARSE DATA
+================================ */
+if (!empty($data['articles'])) {
+    foreach ($data['articles'] as $item) {
 
         $news[] = [
-            'title'  => (string)$item->title,
-            'image'  => $image,
-            'source' => $source,
-            'url'    => (string)$item->link
+            'title'  => $item['title'] ?? 'Game News',
+            'image'  => $item['urlToImage'] 
+                        ?: 'https://via.placeholder.com/600x400?text=Game+News',
+            'source' => $item['source']['name'] ?? 'NewsAPI',
+            'url'    => $item['url'] ?? '#'
         ];
-
-        if (count($news) >= 10) break;
     }
-
-    if (count($news) >= 10) break;
 }
 
 echo json_encode($news, JSON_PRETTY_PRINT);
