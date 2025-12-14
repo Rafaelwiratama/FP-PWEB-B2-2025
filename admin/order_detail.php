@@ -2,10 +2,35 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/_guard.php';
 
+/* =====================
+   VALIDASI ADMIN
+===================== */
+if (($_SESSION['role'] ?? '') !== 'admin') {
+    http_response_code(403);
+    die('Akses ditolak');
+}
+
 $orderId = (int)($_GET['id'] ?? 0);
 if (!$orderId) {
     die('Order tidak valid');
 }
+
+/* =====================
+   AMBIL DATA ORDER
+===================== */
+$orderStmt = $pdo->prepare("
+    SELECT id, payment_status
+    FROM orders
+    WHERE id = ?
+");
+$orderStmt->execute([$orderId]);
+$order = $orderStmt->fetch();
+
+if (!$order) {
+    die('Order tidak ditemukan');
+}
+
+$canGenerate = in_array($order['payment_status'], ['settlement', 'paid']);
 
 /* =====================
    AMBIL ITEM ORDER
@@ -28,85 +53,78 @@ $stmt = $pdo->prepare("
 $stmt->execute([$orderId]);
 $items = $stmt->fetchAll();
 
-/* =====================
-   GENERATE CODE FUNCTION
-===================== */
-function generate_redeem_code(string $platformSlug): string {
-    $prefix = strtoupper(substr($platformSlug ?: 'GAME', 0, 4));
-    $chars  = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    $raw = '';
-    for ($i = 0; $i < 16; $i++) {
-        $raw .= $chars[random_int(0, strlen($chars) - 1)];
-    }
-    return $prefix . '-' .
-           substr($raw,0,4) . '-' .
-           substr($raw,4,4) . '-' .
-           substr($raw,8,4) . '-' .
-           substr($raw,12,4);
-}
-
-/* =====================
-   HANDLE GENERATE
-===================== */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
-    $insert = $pdo->prepare("
-        INSERT INTO redeem_codes (order_item_id, platform_id, code)
-        VALUES (?, ?, ?)
-    ");
-
-    foreach ($items as $item) {
-        if ($item['code']) continue;
-
-        for ($i = 0; $i < $item['quantity']; $i++) {
-            $code = generate_redeem_code($item['platform_slug']);
-            $insert->execute([
-                $item['order_item_id'],
-                $item['platform_id'],
-                $code
-            ]);
-        }
-    }
-
-    header("Location: order_detail.php?id=$orderId");
-    exit;
-}
-
 include __DIR__ . '/../includes/header.php';
 ?>
 
 <main class="container py-5">
-    <h2 class="mb-4">Admin · Order #<?= $orderId ?></h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Admin · Order #<?= $orderId ?></h2>
+        <span class="badge bg-<?= $canGenerate ? 'success' : 'warning' ?>">
+            <?= strtoupper($order['payment_status']) ?>
+        </span>
+    </div>
 
-    <form method="post" class="mb-3">
-        <button name="generate" class="btn btn-warning">
-            Generate Redeem Code
-        </button>
-    </form>
+    <?php if (!$items): ?>
+        <div class="alert alert-info">
+            Tidak ada item pada order ini.
+        </div>
+    <?php else: ?>
+        <div class="table-responsive">
+            <table class="table table-dark table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Produk</th>
+                        <th>Platform</th>
+                        <th>Redeem Code</th>
+                        <th class="text-end">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($items as $it): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($it['title']) ?></td>
+                        <td><?= htmlspecialchars($it['platform_name']) ?></td>
+                        <td>
+                            <?php if ($it['code']): ?>
+                                <code><?= htmlspecialchars($it['code']) ?></code>
+                            <?php else: ?>
+                                <span class="badge bg-warning text-dark">
+                                    Belum tersedia
+                                </span>
+                            <?php endif; ?>
+                        </td>
+                        <td class="text-end">
+                            <?php if ($canGenerate && !$it['code']): ?>
+                                <form method="post"
+                                      action="order_validate.php"
+                                      class="d-inline">
+                                    <input type="hidden"
+                                           name="order_item_id"
+                                           value="<?= (int)$it['order_item_id'] ?>">
+                                    <button class="btn btn-sm btn-warning">
+                                        Generate
+                                    </button>
+                                </form>
+                            <?php elseif (!$canGenerate): ?>
+                                <span class="text-muted small">
+                                    Menunggu pembayaran
+                                </span>
+                            <?php else: ?>
+                                <span class="text-success small">
+                                    Sudah dibuat
+                                </span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
 
-    <table class="table table-dark table-striped">
-        <thead>
-        <tr>
-            <th>Produk</th>
-            <th>Platform</th>
-            <th>Redeem Code</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($items as $it): ?>
-            <tr>
-                <td><?= htmlspecialchars($it['title']) ?></td>
-                <td><?= htmlspecialchars($it['platform_name']) ?></td>
-                <td>
-                    <?php if ($it['code']): ?>
-                        <code><?= htmlspecialchars($it['code']) ?></code>
-                    <?php else: ?>
-                        <span class="badge bg-warning text-dark">Belum tersedia</span>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+    <a href="orders.php" class="btn btn-outline-secondary mt-3">
+        &laquo; Kembali ke Orders
+    </a>
 </main>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
