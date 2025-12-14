@@ -48,7 +48,7 @@ include __DIR__ . '/../includes/header.php';
             '<span class="badge bg-success">'.$item['code'].'</span>' :
             '<span class="badge bg-warning">Belum tersedia</span>' ?>
     </td>
-    <td>
+    
 <?php if ($item['is_upcoming']): ?>
     <span class="badge bg-warning">Upcoming</span>
 <?php elseif (!$item['code'] && $item['payment_status'] === 'settlement'): ?>
@@ -79,3 +79,4 @@ include __DIR__ . '/../includes/header.php';
 </table>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>
+
