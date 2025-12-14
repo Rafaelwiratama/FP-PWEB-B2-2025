@@ -2,27 +2,32 @@
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/includes/helpers.php';
 
-
 // ADD PRODUCT
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_product_id'])) {
     $pid = (int)$_POST['add_product_id'];
     $qty = (int)($_POST['qty'] ?? 1);
-    $stmt = $pdo->prepare("SELECT is_upcoming, price FROM products WHERE id = ?");
-$stmt->execute([$pid]);
-$product = $stmt->fetch();
 
-if (!$product || $product['is_upcoming'] || $product['price'] <= 0) {
-    die('Produk belum tersedia untuk dibeli');
-}
+    $stmt = $pdo->prepare("SELECT is_upcoming, price FROM products WHERE id = ?");
+    $stmt->execute([$pid]);
+    $product = $stmt->fetch();
+
+    // VALIDASI PRODUK
+    if (!$product || $product['is_upcoming'] || $product['price'] <= 0) {
+        $_SESSION['error'] = 'Produk belum tersedia untuk dibeli';
+        header('Location: browse.php');
+        exit;
+    }
 
     if ($qty < 1) $qty = 1;
 
     if (!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
+
     if (!isset($_SESSION['cart'][$pid])) {
         $_SESSION['cart'][$pid] = 0;
     }
+
     $_SESSION['cart'][$pid] += $qty;
 
     header('Location: cart.php');
