@@ -3,63 +3,79 @@ session_start();
 require_once __DIR__ . '/_guard.php';
 require_once __DIR__ . '/../config/config.php';
 
-$orderItemId = (int)($_POST['order_item_id'] ?? 0);
-if (!$orderItemId) die('Invalid item');
+$orderId = (int)($_GET['id'] ?? 0);
+if (!$orderId) die('Invalid order');
 
 $stmt = $pdo->prepare("
     SELECT 
-        oi.*,
-        o.payment_status,
-        pf.slug,
+        oi.id AS order_item_id,
+        p.title,
         p.is_upcoming,
-        p.price
+        pf.name AS platform,
+        o.payment_status,
+        rc.code
     FROM order_items oi
     JOIN orders o ON o.id = oi.order_id
-    JOIN platforms pf ON pf.id = oi.platform_id
     JOIN products p ON p.id = oi.product_id
-    WHERE oi.id = ?
+    JOIN platforms pf ON pf.id = oi.platform_id
+    LEFT JOIN redeem_codes rc ON rc.order_item_id = oi.id
+    WHERE oi.order_id = ?
 ");
-$stmt->execute([$orderItemId]);
-$item = $stmt->fetch();
+$stmt->execute([$orderId]);
+$items = $stmt->fetchAll();
 
-if (!$item) die('Item not found');
+include __DIR__ . '/../includes/header.php';
+?>
 
-/* CEK PAYMENT */
-if ($item['payment_status'] !== 'settlement') {
-    die('Order belum dibayar');
-}
+<h1>Admin · Order #<?= $orderId ?></h1>
 
-/* CEK UPCOMING / PRICE */
-if ((int)$item['is_upcoming'] === 1 || (int)$item['price'] <= 0) {
-    $_SESSION['flash_error'] = 'Produk ini masih UPCOMING, belum bisa generate redeem code';
-    header('Location: order_detail.php?id=' . $item['order_id']);
-    exit;
-}
+<table class="table">
+<thead>
+<tr>
+    <th>Produk</th>
+    <th>Platform</th>
+    <th>Redeem Code</th>
+    <th>Aksi</th>
+</tr>
+</thead>
+<tbody>
+<?php foreach ($items as $item): ?>
+<tr>
+    <td><?= htmlspecialchars($item['title']) ?></td>
+    <td><?= htmlspecialchars($item['platform']) ?></td>
+    <td>
+        <?= $item['code'] ? 
+            '<span class="badge bg-success">'.$item['code'].'</span>' :
+            '<span class="badge bg-warning">Belum tersedia</span>' ?>
+    </td>
+    <td>
+<?php if ($item['is_upcoming']): ?>
+    <span class="badge bg-warning">Upcoming</span>
+<?php elseif (!$item['code'] && $item['payment_status'] === 'settlement'): ?>
+    <form method="post" action="order_validate.php">
+        <input type="hidden" name="order_item_id" value="<?= $item['order_item_id'] ?>">
+        <button class="btn btn-sm btn-success">Generate Code</button>
+    </form>
+<?php else: ?>
+    -
+<?php endif; ?>
+</td>
 
-/* CEK REDEEM CODE EXIST */
-$check = $pdo->prepare("
-    SELECT id FROM redeem_codes WHERE order_item_id = ?
-");
-$check->execute([$orderItemId]);
-if ($check->fetch()) {
-    $_SESSION['flash_error'] = 'Redeem code sudah ada';
-    header('Location: order_detail.php?id=' . $item['order_id']);
-    exit;
-}
+    <td>
+        <?php if (!$item['code'] && $item['payment_status'] === 'settlement'): ?>
+            <form method="post" action="order_validate.php">
+                <input type="hidden" name="order_item_id" value="<?= $item['order_item_id'] ?>">
+                <button class="btn btn-sm btn-success">
+                    Generate Code
+                </button>
+            </form>
+        <?php else: ?>
+            -
+        <?php endif; ?>
+    </td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>
 
-/* GENERATE */
-$code = generate_redeem_code($item['slug']);
-
-$insert = $pdo->prepare("
-    INSERT INTO redeem_codes (order_item_id, platform_id, code)
-    VALUES (?, ?, ?)
-");
-$insert->execute([
-    $orderItemId,
-    $item['platform_id'],
-    $code
-]);
-
-$_SESSION['flash_success'] = 'Redeem code berhasil dibuat';
-header('Location: order_detail.php?id=' . $item['order_id']);
-exit;
+<?php include __DIR__ . '/../includes/footer.php'; ?>
