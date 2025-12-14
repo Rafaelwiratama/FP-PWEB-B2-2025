@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/_guard.php';
 
-if (empty($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../login.php');
-    exit;
+if ($_SESSION['role'] !== 'admin') {
+    die('Akses ditolak');
 }
 
 $orderId = (int)($_GET['id'] ?? 0);
@@ -33,7 +33,7 @@ $stmt->execute([$orderId]);
 $items = $stmt->fetchAll();
 
 /* =====================
-   GENERATE CODE (ADMIN)
+   GENERATE CODE
 ===================== */
 function generate_redeem_code(string $platformSlug): string {
     $prefix = strtoupper(substr($platformSlug ?: 'GAME', 0, 4));
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
     ");
 
     foreach ($items as $item) {
-        if ($item['code']) continue; // jangan dobel
+        if ($item['code']) continue;
 
         for ($i = 0; $i < $item['quantity']; $i++) {
             $code = generate_redeem_code($item['platform_slug']);
