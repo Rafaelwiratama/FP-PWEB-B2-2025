@@ -1,21 +1,29 @@
 <?php
-session_start();
-require_once __DIR__ . '/_guard.php';
 require_once __DIR__ . '/../config/config.php';
 
-$orderId = (int)($_GET['id'] ?? 0);
-if (!$orderId) die('Invalid order');
+if (empty($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header('Location: ../login.php');
+    exit;
+}
 
+$orderId = (int)($_GET['id'] ?? 0);
+if (!$orderId) {
+    die('Order tidak valid');
+}
+
+/* =====================
+   AMBIL ITEM ORDER
+===================== */
 $stmt = $pdo->prepare("
-    SELECT 
+    SELECT
         oi.id AS order_item_id,
+        oi.quantity,
         p.title,
-        p.is_upcoming,
-        pf.name AS platform,
-        o.payment_status,
+        pf.id AS platform_id,
+        pf.name AS platform_name,
+        pf.slug AS platform_slug,
         rc.code
     FROM order_items oi
-    JOIN orders o ON o.id = oi.order_id
     JOIN products p ON p.id = oi.product_id
     JOIN platforms pf ON pf.id = oi.platform_id
     LEFT JOIN redeem_codes rc ON rc.order_item_id = oi.id
@@ -24,59 +32,82 @@ $stmt = $pdo->prepare("
 $stmt->execute([$orderId]);
 $items = $stmt->fetchAll();
 
-include __DIR__ . '/../includes/header.php';
+/* =====================
+   GENERATE CODE (ADMIN)
+===================== */
+function generate_redeem_code(string $platformSlug): string {
+    $prefix = strtoupper(substr($platformSlug ?: 'GAME', 0, 4));
+    $chars  = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    $code   = '';
+    for ($i = 0; $i < 16; $i++) {
+        $code .= $chars[random_int(0, strlen($chars) - 1)];
+    }
+    return $prefix . '-' .
+           substr($code,0,4) . '-' .
+           substr($code,4,4) . '-' .
+           substr($code,8,4) . '-' .
+           substr($code,12,4);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate'])) {
+    $insert = $pdo->prepare("
+        INSERT INTO redeem_codes (order_item_id, platform_id, code)
+        VALUES (?, ?, ?)
+    ");
+
+    foreach ($items as $item) {
+        if ($item['code']) continue; // jangan dobel
+
+        for ($i = 0; $i < $item['quantity']; $i++) {
+            $code = generate_redeem_code($item['platform_slug']);
+            $insert->execute([
+                $item['order_item_id'],
+                $item['platform_id'],
+                $code
+            ]);
+        }
+    }
+
+    header("Location: order_detail.php?id=$orderId");
+    exit;
+}
+
+include __DIR__ . '/includes/header.php';
 ?>
 
-<h1>Admin · Order #<?= $orderId ?></h1>
+<div class="container py-5">
+  <h2>Admin · Order #<?= $orderId ?></h2>
 
-<table class="table">
-<thead>
-<tr>
-    <th>Produk</th>
-    <th>Platform</th>
-    <th>Redeem Code</th>
-    <th>Aksi</th>
-</tr>
-</thead>
-<tbody>
-<?php foreach ($items as $item): ?>
-<tr>
-    <td><?= htmlspecialchars($item['title']) ?></td>
-    <td><?= htmlspecialchars($item['platform']) ?></td>
-    <td>
-        <?= $item['code'] ? 
-            '<span class="badge bg-success">'.$item['code'].'</span>' :
-            '<span class="badge bg-warning">Belum tersedia</span>' ?>
-    </td>
-    
-<?php if ($item['is_upcoming']): ?>
-    <span class="badge bg-warning">Upcoming</span>
-<?php elseif (!$item['code'] && $item['payment_status'] === 'settlement'): ?>
-    <form method="post" action="order_validate.php">
-        <input type="hidden" name="order_item_id" value="<?= $item['order_item_id'] ?>">
-        <button class="btn btn-sm btn-success">Generate Code</button>
-    </form>
-<?php else: ?>
-    -
-<?php endif; ?>
-</td>
+  <form method="post" class="mb-3">
+    <button name="generate" class="btn btn-warning">
+      Generate Redeem Code
+    </button>
+  </form>
 
-    <td>
-        <?php if (!$item['code'] && $item['payment_status'] === 'settlement'): ?>
-            <form method="post" action="order_validate.php">
-                <input type="hidden" name="order_item_id" value="<?= $item['order_item_id'] ?>">
-                <button class="btn btn-sm btn-success">
-                    Generate Code
-                </button>
-            </form>
-        <?php else: ?>
-            -
-        <?php endif; ?>
-    </td>
-</tr>
-<?php endforeach; ?>
-</tbody>
-</table>
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>Produk</th>
+        <th>Platform</th>
+        <th>Redeem Code</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($items as $it): ?>
+      <tr>
+        <td><?= htmlspecialchars($it['title']) ?></td>
+        <td><?= htmlspecialchars($it['platform_name']) ?></td>
+        <td>
+          <?php if ($it['code']): ?>
+            <code><?= htmlspecialchars($it['code']) ?></code>
+          <?php else: ?>
+            <span class="badge bg-warning text-dark">Belum tersedia</span>
+          <?php endif; ?>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
+</div>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
-
+<?php include __DIR__ . '/includes/footer.php'; ?>
